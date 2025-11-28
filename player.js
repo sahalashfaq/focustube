@@ -2888,82 +2888,82 @@ document.addEventListener('DOMContentLoaded', function () {
     // ... existing code ...
     setupReactionButtons();
 });
-// Track violation attempts
-let violationCount = 0;
-const MAX_VIOLATIONS = 5;
+// // Track violation attempts
+// let violationCount = 0;
+// const MAX_VIOLATIONS = 5;
 
-function handleViolation(message, severity) {
-    violationCount++;
-    showToast(`${message} (${violationCount}/${MAX_VIOLATIONS})`, severity);
+// function handleViolation(message, severity) {
+//     violationCount++;
+//     showToast(`${message} (${violationCount}/${MAX_VIOLATIONS})`, severity);
 
-    if (violationCount >= MAX_VIOLATIONS) {
-        enforceTermination();
-    }
-}
+//     if (violationCount >= MAX_VIOLATIONS) {
+//         enforceTermination();
+//     }
+// }
 
-function enforceTermination() {
-    // Try multiple methods to close/disable the page
+// function enforceTermination() {
+//     // Try multiple methods to close/disable the page
 
-    // 1. First try standard window closing
-    try {
-        window.open('', '_self').close();
-    } catch (e) {}
+//     // 1. First try standard window closing
+//     try {
+//         window.open('', '_self').close();
+//     } catch (e) {}
 
-    // // 2. If that fails, redirect to about:blank after delay
-    // setTimeout(() => {
-    //     window.location.href = 'index.html';
+//     // // 2. If that fails, redirect to about:blank after delay
+//     // setTimeout(() => {
+//     //     window.location.href = 'index.html';
 
-    //     // 3. As last resort, make page unusable
-    //     setTimeout(() => {
-    //         document.body.innerHTML = '<h1>Access Denied</h1>';
-    //         document.body.style.pointerEvents = 'none';
-    //         document.body.style.userSelect = 'none';
+//     //     // 3. As last resort, make page unusable
+//     //     setTimeout(() => {
+//     //         document.body.innerHTML = '<h1>Access Denied</h1>';
+//     //         document.body.style.pointerEvents = 'none';
+//     //         document.body.style.userSelect = 'none';
 
-    //         // Disable all keyboard input
-    //         document.addEventListener('keydown', (e) => {
-    //             e.preventDefault();
-    //             e.stopPropagation();
-    //             return false;
-    //         }, true);
-    //     }, 1000);
-    // }, 500);
-}
+//     //         // Disable all keyboard input
+//     //         document.addEventListener('keydown', (e) => {
+//     //             e.preventDefault();
+//     //             e.stopPropagation();
+//     //             return false;
+//     //         }, true);
+//     //     }, 1000);
+//     // }, 500);
+// }
 
-// ===== Event Blockers =====
-document.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-    handleViolation('Right-click is disabled', 'warning');
-    return false;
-});
+// // ===== Event Blockers =====
+// document.addEventListener('contextmenu', (e) => {
+//     e.preventDefault();
+//     handleViolation('Right-click is disabled', 'warning');
+//     return false;
+// });
 
-document.addEventListener('keydown', (e) => {
-    // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+Shift+C
-    if (e.key === 'F12' || e.keyCode === 123 ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) ||
-        (e.ctrlKey && (e.key === 'U' || e.key === 'u')) ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c'))) {
-        e.preventDefault();
-        handleViolation('Developer tools are disabled', 'error');
-        return false;
-    }
-});
+// document.addEventListener('keydown', (e) => {
+//     // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+Shift+C
+//     if (e.key === 'F12' || e.keyCode === 123 ||
+//         (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) ||
+//         (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) ||
+//         (e.ctrlKey && (e.key === 'U' || e.key === 'u')) ||
+//         (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c'))) {
+//         e.preventDefault();
+//         handleViolation('Developer tools are disabled', 'error');
+//         return false;
+//     }
+// });
 
-// ===== DevTools Detection =====
-let devToolsOpen = false;
-setInterval(() => {
-    const threshold = 160;
-    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+// // ===== DevTools Detection =====
+// let devToolsOpen = false;
+// setInterval(() => {
+//     const threshold = 160;
+//     const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+//     const heightThreshold = window.outerHeight - window.innerHeight > threshold;
 
-    if ((widthThreshold || heightThreshold) && !devToolsOpen) {
-        devToolsOpen = true;
-        handleViolation('DevTools detected!', 'error');
-        window.location.href = 'about:blank';
-    } else if (!widthThreshold && !heightThreshold) {
-        devToolsOpen = false;
-    }
-}, 500);
+//     if ((widthThreshold || heightThreshold) && !devToolsOpen) {
+//         devToolsOpen = true;
+//         handleViolation('DevTools detected!', 'error');
+//         window.location.href = 'about:blank';
+//     } else if (!widthThreshold && !heightThreshold) {
+//         devToolsOpen = false;
+//     }
+// }, 500);
 
 // ===== Other Protections =====
 window.addEventListener('beforeunload', (e) => {
@@ -3195,4 +3195,5 @@ function refreshVideoCards() {
     // Your existing render code...
     // Then restart indicator updates
     setTimeout(startNotesIndicatorUpdates, 500);
+
 }
